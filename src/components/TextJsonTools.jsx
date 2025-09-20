@@ -18,12 +18,16 @@ export default function TextJsonTools() {
       setFormatted(response.data.formatted);
     } catch (err) {
       console.error(err);
-      alert("Invalid JSON or server error!");
+      alert("Server error! Please try again.");
     }
   };
 
   const styles = {
-    container: { padding: "20px", fontFamily: "Arial, sans-serif", color: "#f5f5f5" },
+    container: {
+      padding: "20px",
+      fontFamily: "Arial, sans-serif",
+      color: "#f5f5f5",
+    },
     textarea: {
       width: "100%",
       padding: "12px",
@@ -39,11 +43,14 @@ export default function TextJsonTools() {
       padding: "12px 24px",
       border: "none",
       borderRadius: "5px",
-      backgroundColor: "#3b82f6",
+      backgroundColor:"#3b82f6",
       color: "#fff",
       cursor: "pointer",
       fontWeight: "bold",
       marginBottom: "20px",
+    },
+    heading: {
+      marginBottom: "15px",
     },
   };
 
@@ -59,7 +66,7 @@ export default function TextJsonTools() {
         rows={10}
         placeholder="Enter your JSON here..."
         style={styles.textarea}
-      />
+      ></textarea>
 
       <button onClick={handleFormatJson} style={styles.button}>
         Format JSON
@@ -71,7 +78,7 @@ export default function TextJsonTools() {
         rows={10}
         placeholder="Formatted JSON will appear here..."
         style={styles.textarea}
-      />
+      ></textarea>
     </div>
   );
 }
