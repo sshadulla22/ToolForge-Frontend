@@ -51,19 +51,48 @@ function ConverterCard({ title, apiUrl, accept, outputExt, goBack }) {
     if (file) setFileName(file.name);
   };
 
-  const handleConvert = async () => {
-    const file = fileInputRef.current.files[0];
-    if (!file) return alert("Please select a file first");
+const handleConvert = async () => {
+  const file = fileInputRef.current.files[0];
+  if (!file) return alert("Please select a file first");
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
 
-      const response = await axios.post(apiUrl, formData, {
-        responseType: "blob",
-      });
+    // Ensure the API URL has the correct trailing slash
+    const url = apiUrl.endsWith("/") ? apiUrl : apiUrl + "/";
+
+    const response = await axios.post(url, formData, {
+      responseType: "blob",
+    });
+
+    if (!response || response.status !== 200) {
+      throw new Error("Conversion failed on server");
+    }
+
+    const blobUrl = window.URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+
+    const downloadName = outputExt
+      ? file.name.replace(/\.[^.]+$/, outputExt)
+      : file.name;
+
+    link.setAttribute("download", downloadName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (err) {
+    console.error("Conversion failed:", err);
+    alert("Conversion failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
