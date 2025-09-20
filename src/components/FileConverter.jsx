@@ -43,15 +43,14 @@ function ConverterCard({ title, apiUrl, accept, outputExt, goBack }) {
     if (!file) return alert("Please select a file first");
 
     setLoading(true);
+    const formData = new FormData();
+    formData.append("file", file);
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 min timeout
 
-      const response = await fetch(apiUrl, {
+      let response = await fetch(apiUrl, {
         method: 'POST',
         body: formData,
         signal: controller.signal,
@@ -60,22 +59,33 @@ function ConverterCard({ title, apiUrl, accept, outputExt, goBack }) {
 
       clearTimeout(timeoutId);
 
-      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      // Handle redirects (307 / 308)
+      if (response.status === 307 || response.status === 308) {
+        const redirectUrl = response.headers.get("location");
+        if (!redirectUrl) throw new Error("Redirect failed: no location header");
+        response = await fetch(redirectUrl, { method: 'POST', body: formData, signal: controller.signal });
+      }
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type");
+        let errMsg = '';
+        if (contentType && contentType.includes("application/json")) {
+          const data = await response.json();
+          errMsg = data.detail || JSON.stringify(data);
+        } else {
+          errMsg = await response.text();
+        }
+        throw new Error(errMsg || `HTTP ${response.status}`);
+      }
 
       const blob = await response.blob();
       downloadBlob(blob, file.name, outputExt, response.headers.get("content-type"));
-
     } catch (err) {
       console.error("Conversion failed:", err);
-
-      let message = "Conversion failed. ";
-      if (err.name === 'AbortError') message += "Request timed out.";
-      else if (err.message.includes('413')) message += "File too large.";
-      else if (err.message.match(/5\d{2}/)) message += "Server error. Try later.";
-      else if (err.message.includes('400')) message += "Invalid file format.";
-      else message += "Check your network or try again.";
-
-      alert(message);
+      let msg = "Conversion failed. ";
+      if (err.name === 'AbortError') msg += "Request timed out.";
+      else msg += err.message;
+      alert(msg);
     } finally {
       setLoading(false);
     }
