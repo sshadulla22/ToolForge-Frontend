@@ -14,7 +14,7 @@ export default function Base64Tools() {
     else formData.append("text", text);
 
     const response = await axios.post(
-      "http://127.0.0.1:8000/base64-encode/",
+      "https://toolforge-backend-1.onrender.com",
       formData
     );
     setEncoded(response.data.base64);
