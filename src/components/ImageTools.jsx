@@ -24,19 +24,19 @@ function ImageTools() {
     let url = "";
     if (subtool === "Compress Image") {
       formData.append("target_size", targetSize);
-      url = "http://127.0.0.1:8000/compress-image/";
+      url = "https://toolforge-backend-1.onrender.com/compress-image/";
     } else if (subtool === "Resize Image") {
       formData.append("width", width);
       formData.append("height", height);
-      url = "http://127.0.0.1:8000/resize-image/";
+      url = "https://toolforge-backend-1.onrender.com/resize-image/";
     } else if (subtool === "Convert Format") {
       formData.append("format", format);
-      url = "http://127.0.0.1:8000/convert-format/";
+      url = "https://toolforge-backend-1.onrender.com/convert-format/";
     } else if (subtool === "Add Watermark") {
       formData.append("text", watermarkText);
       formData.append("opacity", opacity);
       formData.append("font_size", fontSize);
-      url = "http://127.0.0.1:8000/watermark/";
+      url = "https://toolforge-backend-1.onrender.com/watermark/";
     }
 
     try {
