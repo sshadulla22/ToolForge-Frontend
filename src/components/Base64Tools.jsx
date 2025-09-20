@@ -8,18 +8,56 @@ export default function Base64Tools() {
   const [text, setText] = useState("");
   const [encoded, setEncoded] = useState("");
 
+  // ---------- Encode ----------
   const handleEncode = async () => {
     const formData = new FormData();
     if (file) formData.append("file", file);
     else formData.append("text", text);
 
-    const response = await axios.post(
-      "https://toolforge-backend-1.onrender.com",
-      formData
-    );
-    setEncoded(response.data.base64);
+    try {
+      const response = await axios.post(
+        "https://toolforge-backend-1.onrender.com/base64-encode/",
+        formData
+      );
+      setEncoded(response.data.base64);
+    } catch (error) {
+      console.error("Encoding failed:", error);
+      alert("Error encoding file/text. Please try again.");
+    }
   };
 
+  // ---------- Decode ----------
+  const handleDecode = async () => {
+    if (!encoded) {
+      alert("Please enter a Base64 string first.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("encoded", encoded);
+
+      const response = await axios.post(
+        "https://toolforge-backend-1.onrender.com/base64-decode/",
+        formData,
+        { responseType: "blob" }
+      );
+
+      // Download decoded file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "decoded.bin");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Decoding failed:", error);
+      alert("Error decoding Base64. Please try again.");
+    }
+  };
+
+  // ---------- Styles ----------
   const dropStyle = {
     width: "100%",
     margin: "10px 0 15px 0",
@@ -43,7 +81,7 @@ export default function Base64Tools() {
     color: "#fff",
     cursor: "pointer",
     fontWeight: "bold",
-    marginBottom: "20px",
+    marginRight: "10px",
   };
 
   const inputStyle = {
@@ -51,8 +89,8 @@ export default function Base64Tools() {
     padding: 10,
     margin: "10px 0 20px 0",
     borderRadius: 5,
-    border: "1px solid #ffffffff",
-    backgroundColor: "#000000ff",
+    border: "1px solid #ffffff",
+    backgroundColor: "#000000",
     color: "#f5f5f5",
     boxSizing: "border-box",
   };
@@ -86,10 +124,15 @@ export default function Base64Tools() {
         rows={5}
       />
 
-      {/* Encode Button */}
-      <button onClick={handleEncode} style={buttonStyle}>
-        Encode
-      </button>
+      {/* Buttons */}
+      <div>
+        <button onClick={handleEncode} style={buttonStyle}>
+          Encode
+        </button>
+        <button onClick={handleDecode} style={buttonStyle}>
+          Decode
+        </button>
+      </div>
 
       {/* Output */}
       {encoded && (
@@ -98,6 +141,7 @@ export default function Base64Tools() {
           readOnly
           rows={10}
           style={inputStyle}
+          placeholder="Base64 output will appear here..."
         />
       )}
     </div>
