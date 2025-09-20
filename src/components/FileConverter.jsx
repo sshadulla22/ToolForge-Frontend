@@ -4,16 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 
-// List of all converters
 const converters = [
   { title: "PDF → DOCX", apiUrl: "https://toolforge-backend-1.onrender.com/convert/pdf-to-docx", accept: ".pdf", outputExt: ".docx" },
   { title: "DOCX → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/docx-to-pdf", accept: ".docx", outputExt: ".pdf" },
-  { title: "PDF → Image", apiUrl: "https://toolforge-backend-1.onrender.com/pdf-to-image", accept: ".pdf", outputExt: ".jpg" },
+  { title: "PDF → Image", apiUrl: "https://toolforge-backend-1.onrender.com/convert/pdf-to-image", accept: ".pdf", outputExt: ".jpg" },
   { title: "Image → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/image-to-pdf", accept: "image/*", outputExt: ".pdf" },
-  { title: "PPT → PDF", apiUrl: "http://127.0.0.1:8000/convert/ppt-to-pdf", accept: ".ppt,.pptx", outputExt: ".pdf" },
+  { title: "PPT → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/ppt-to-pdf", accept: ".ppt,.pptx", outputExt: ".pdf" },
   { title: "Excel → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/excel-to-pdf", accept: ".xls,.xlsx", outputExt: ".pdf" },
-  // Add more converters here...
 ];
+
 
 export default function FileConverterDashboard() {
   const [activeConverter, setActiveConverter] = useState(null);
