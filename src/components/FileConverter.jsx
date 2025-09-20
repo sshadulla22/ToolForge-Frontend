@@ -40,40 +40,56 @@ function ConverterCard({ title, apiUrl, accept, outputExt, goBack }) {
   };
 
   const handleConvert = async () => {
-    const file = fileInputRef.current.files[0];
-    if (!file) return alert("Please select a file first");
-    setLoading(true);
+  const file = fileInputRef.current.files[0];
+  if (!file) return alert("Please select a file first");
 
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
+  setLoading(true);
 
-      const response = await axios.post(apiUrl, formData, {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await axios.post(apiUrl, formData, {
+      responseType: "blob",
+      maxRedirects: 0, // prevent Axios from auto-following redirect
+      validateStatus: (status) => status >= 200 && status < 400, // allow 3xx temporarily
+    });
+
+    // If server redirected, retry with the redirected URL
+    if (response.status === 307 || response.status === 308) {
+      const redirectedUrl = response.headers.location;
+      if (!redirectedUrl) throw new Error("Redirect failed, no location header");
+
+      const redirectedResponse = await axios.post(redirectedUrl, formData, {
         responseType: "blob",
       });
 
-      if (!response.data) throw new Error("No file returned from server");
-
-      // Always create a Blob object
-      const blob = new Blob([response.data], { type: response.headers["content-type"] });
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      const downloadName = outputExt ? file.name.replace(/\.[^.]+$/, outputExt) : file.name;
-      link.setAttribute("download", downloadName);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-
-    } catch (err) {
-      console.error("Conversion failed:", err);
-      alert("Conversion failed. Please try again.");
-    } finally {
-      setLoading(false);
+      downloadBlob(redirectedResponse.data, file.name, outputExt, redirectedResponse.headers["content-type"]);
+    } else {
+      downloadBlob(response.data, file.name, outputExt, response.headers["content-type"]);
     }
-  };
+  } catch (err) {
+    console.error("Conversion failed:", err);
+    alert("Conversion failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+// Helper to download blob
+const downloadBlob = (data, originalName, outputExt, contentType) => {
+  const blob = new Blob([data], { type: contentType || "application/octet-stream" });
+  const blobUrl = window.URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = blobUrl;
+  const downloadName = outputExt ? originalName.replace(/\.[^.]+$/, outputExt) : originalName;
+  link.setAttribute("download", downloadName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(blobUrl);
+};
+
 
   return (
     <div style={styles.card}>
