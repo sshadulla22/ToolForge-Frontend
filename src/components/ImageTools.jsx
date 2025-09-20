@@ -14,38 +14,51 @@ function ImageTools() {
   const [opacity, setOpacity] = useState(100);
   const [fontSize, setFontSize] = useState(30);
   const [processedImage, setProcessedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (!file) return alert("Please upload an image!");
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("file", file);
 
     let url = "";
-    if (subtool === "Compress Image") {
-      formData.append("target_size", targetSize);
-      url = "https://toolforge-backend-1.onrender.com/compress-image/";
-    } else if (subtool === "Resize Image") {
-      formData.append("width", width);
-      formData.append("height", height);
-      url = "https://toolforge-backend-1.onrender.com/resize-image/";
-    } else if (subtool === "Convert Format") {
-      formData.append("format", format);
-      url = "https://toolforge-backend-1.onrender.com/convert-format/";
-    } else if (subtool === "Add Watermark") {
-      formData.append("text", watermarkText);
-      formData.append("opacity", opacity);
-      formData.append("font_size", fontSize);
-      url = "https://toolforge-backend-1.onrender.com/watermark/";
+    switch (subtool) {
+      case "Compress Image":
+        formData.append("target_size", targetSize);
+        url = "https://toolforge-backend-1.onrender.com/compress-image/";
+        break;
+      case "Resize Image":
+        formData.append("width", width);
+        formData.append("height", height);
+        url = "https://toolforge-backend-1.onrender.com/resize-image/";
+        break;
+      case "Convert Format":
+        formData.append("format", format);
+        url = "https://toolforge-backend-1.onrender.com/convert-format/";
+        break;
+      case "Add Watermark":
+        formData.append("text", watermarkText);
+        formData.append("opacity", opacity);
+        formData.append("font_size", fontSize);
+        url = "https://toolforge-backend-1.onrender.com/watermark/";
+        break;
+      default:
+        return alert("Invalid tool selected!");
     }
 
     try {
       const res = await axios.post(url, formData, { responseType: "blob" });
-      const downloadUrl = window.URL.createObjectURL(new Blob([res.data]));
-      setProcessedImage(downloadUrl);
+
+      // Create downloadable blob
+      const blobUrl = window.URL.createObjectURL(new Blob([res.data]));
+      setProcessedImage(blobUrl);
     } catch (err) {
       console.error("Error:", err);
-      alert("Something went wrong!");
+      alert("Something went wrong while processing the image!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,7 +133,7 @@ function ImageTools() {
   return (
     <div style={styles.container}>
       <h2 style={{ textAlign: "center", fontSize: "1.2rem", fontWeight: 700, marginBottom: "2rem" }}>
-        Image Tool's
+        Image Tools
       </h2>
 
       <select style={styles.select} value={subtool} onChange={(e) => setSubtool(e.target.value)}>
@@ -142,7 +155,6 @@ function ImageTools() {
         />
       </div>
 
-      {/* Show uploaded image and size */}
       {file && (
         <div style={styles.infoText}>
           <strong>Uploaded:</strong> {file.name} ({fileSizeKB} KB)
@@ -150,7 +162,6 @@ function ImageTools() {
         </div>
       )}
 
-      {/* Dynamic input sections */}
       {subtool === "Compress Image" && (
         <div>
           <label>Target size (KB):</label>
@@ -190,9 +201,10 @@ function ImageTools() {
         </div>
       )}
 
-      <button style={styles.button} onClick={handleSubmit}>Submit</button>
+      <button style={styles.button} onClick={handleSubmit} disabled={loading}>
+        {loading ? "Processing..." : "Submit"}
+      </button>
 
-      {/* Show processed image */}
       {processedImage && (
         <div style={styles.infoText}>
           <strong>Processed Image:</strong>
