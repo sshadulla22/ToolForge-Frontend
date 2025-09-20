@@ -50,46 +50,47 @@ function ConverterCard({ title, apiUrl, accept, outputExt, goBack }) {
   };
 
   const handleConvert = async () => {
-    const file = fileInputRef.current.files[0];
-    if (!file) return alert("Please select a file first");
+  const file = fileInputRef.current.files[0];
+  if (!file) return alert("Please select a file first");
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
 
-      // Ensure the API URL has the correct trailing slash
-      const url = apiUrl.endsWith("/") ? apiUrl : apiUrl + "/";
+    const response = await axios.post(apiUrl, formData, {
+      responseType: "blob",
+    });
 
-      const response = await axios.post(url, formData, {
-        responseType: "blob",
-      });
-
-      if (!response || response.status !== 200) {
-        throw new Error("Conversion failed on server");
-      }
-
-      const blobUrl = window.URL.createObjectURL(response.data);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-
-      const downloadName = outputExt
-        ? file.name.replace(/\.[^.]+$/, outputExt)
-        : file.name;
-
-      link.setAttribute("download", downloadName);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (err) {
-      console.error("Conversion failed:", err);
-      alert("Conversion failed. Please try again.");
-    } finally {
-      setLoading(false);
+    // Check if the response is a Blob
+    if (!response.data || !(response.data instanceof Blob)) {
+      throw new Error("Conversion failed on server");
     }
-  };
+
+    // Create URL for download
+    const blobUrl = window.URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+
+    const downloadName = outputExt
+      ? file.name.replace(/\.[^.]+$/, outputExt)
+      : file.name;
+
+    link.setAttribute("download", downloadName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+
+  } catch (err) {
+    console.error("Conversion failed:", err);
+    alert("Conversion failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div style={styles.card}>
