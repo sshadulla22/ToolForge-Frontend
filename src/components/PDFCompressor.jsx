@@ -23,7 +23,7 @@ export default function PDFCompressor() {
       formData.append("file", file);
       formData.append("level", level);
 
-      const response = await axios.post("http://127.0.0.1:8000/compress-pdf/", formData, {
+      const response = await axios.post("https://toolforge-backend-1.onrender.com/compress-pdf/", formData, {
         responseType: "blob",
       });
 
