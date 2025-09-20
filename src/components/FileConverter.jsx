@@ -40,56 +40,55 @@ function ConverterCard({ title, apiUrl, accept, outputExt, goBack }) {
   };
 
   const handleConvert = async () => {
-  const file = fileInputRef.current.files[0];
-  if (!file) return alert("Please select a file first");
+    const file = fileInputRef.current.files[0];
+    if (!file) return alert("Please select a file first");
 
-  setLoading(true);
+    setLoading(true);
 
-  try {
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    const response = await axios.post(apiUrl, formData, {
-      responseType: "blob",
-      maxRedirects: 0, // prevent Axios from auto-following redirect
-      validateStatus: (status) => status >= 200 && status < 400, // allow 3xx temporarily
-    });
-
-    // If server redirected, retry with the redirected URL
-    if (response.status === 307 || response.status === 308) {
-      const redirectedUrl = response.headers.location;
-      if (!redirectedUrl) throw new Error("Redirect failed, no location header");
-
-      const redirectedResponse = await axios.post(redirectedUrl, formData, {
+      const response = await axios.post(apiUrl, formData, {
         responseType: "blob",
+        maxRedirects: 0, // prevent Axios from auto-following redirect
+        validateStatus: (status) => status >= 200 && status < 400, // allow 3xx temporarily
       });
 
-      downloadBlob(redirectedResponse.data, file.name, outputExt, redirectedResponse.headers["content-type"]);
-    } else {
-      downloadBlob(response.data, file.name, outputExt, response.headers["content-type"]);
+      // Handle server redirect (307/308)
+      if (response.status === 307 || response.status === 308) {
+        const redirectedUrl = response.headers.location;
+        if (!redirectedUrl) throw new Error("Redirect failed, no location header");
+
+        const redirectedResponse = await axios.post(redirectedUrl, formData, {
+          responseType: "blob",
+        });
+
+        downloadBlob(redirectedResponse.data, file.name, outputExt, redirectedResponse.headers["content-type"]);
+      } else {
+        downloadBlob(response.data, file.name, outputExt, response.headers["content-type"]);
+      }
+    } catch (err) {
+      console.error("Conversion failed:", err);
+      alert("Conversion failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error("Conversion failed:", err);
-    alert("Conversion failed. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
-// Helper to download blob
-const downloadBlob = (data, originalName, outputExt, contentType) => {
-  const blob = new Blob([data], { type: contentType || "application/octet-stream" });
-  const blobUrl = window.URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = blobUrl;
-  const downloadName = outputExt ? originalName.replace(/\.[^.]+$/, outputExt) : originalName;
-  link.setAttribute("download", downloadName);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(blobUrl);
-};
-
+  // Helper function to download a blob
+  const downloadBlob = (data, originalName, outputExt, contentType) => {
+    const blob = new Blob([data], { type: contentType || "application/octet-stream" });
+    const blobUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    const downloadName = outputExt ? originalName.replace(/\.[^.]+$/, outputExt) : originalName;
+    link.setAttribute("download", downloadName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(blobUrl);
+  };
 
   return (
     <div style={styles.card}>
