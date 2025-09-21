@@ -1,5 +1,8 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import "./PDFCompressor.css"; // Import the CSS
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 export default function PDFCompressor() {
   const fileInputRef = useRef(null);
@@ -23,9 +26,11 @@ export default function PDFCompressor() {
       formData.append("file", file);
       formData.append("level", level);
 
-      const response = await axios.post("https://toolforge-backend-1.onrender.com/compress-pdf/", formData, {
-        responseType: "blob",
-      });
+      const response = await axios.post(
+        "https://toolforge-backend-1.onrender.com/compress-pdf/",
+        formData,
+        { responseType: "blob" }
+      );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -44,33 +49,43 @@ export default function PDFCompressor() {
   };
 
   return (
-    <div style={{ padding: "2rem", textAlign: "center" }}>
-      <h2>PDF Compressor</h2>
+    <div className="compressor-container">
+<h2 style={{
+    textAlign: "center",
+    fontSize: "1.2rem",
+    fontWeight: "700",
+    marginBottom: "1rem",
+    textTransform: "uppercase",
+    letterSpacing: "1px",
+    color: "White",
+  }}>
+    PDF Compressor
+  </h2>
+      <div className="file-input-wrapper" onClick={() => fileInputRef.current.click()}>
+        <FontAwesomeIcon icon={faUpload} size="2x" color="#3b82f6" />
+         <p style={{ marginTop: "0.5rem" }}>
+        Drop a PDF or <span style={{ fontWeight: "bold",color:"#3b82f6" }}>Upload</span>
+      </p>
+        <input
+        
+          type="file"
+          ref={fileInputRef}
+          accept=".pdf"
+          onChange={handleFileSelect}
+        />
+        <p>{fileName ? `Selected: ${fileName}` : ""}</p>
+      </div>
 
-      <input
-        type="file"
-        ref={fileInputRef}
-        accept=".pdf"
-        onChange={handleFileSelect}
-        style={{ display: "block", margin: "1rem auto", padding: "1rem", border: "2px dashed #ccc", borderRadius: "10px" }}
-      />
-      {fileName && <p>Selected: {fileName}</p>}
-
-      <label>
-        Compression Level:{" "}
+      <div className="level-select">
+        <label>Compression Level:</label>
         <select value={level} onChange={(e) => setLevel(e.target.value)}>
           <option value="high">High Compression</option>
           <option value="medium">Medium Compression</option>
           <option value="low">Low Compression</option>
         </select>
-      </label>
+      </div>
 
-      <br />
-      <button
-        onClick={handleCompress}
-        disabled={loading}
-        style={{ marginTop: "1rem", padding: "0.8rem 2rem", background: "#2563eb", color: "#fff", border: "none", borderRadius: "8px", cursor: "pointer", fontWeight: "600" }}
-      >
+      <button onClick={handleCompress} disabled={loading}>
         {loading ? "Compressing..." : "Compress PDF"}
       </button>
     </div>
