@@ -85,3 +85,106 @@ html, body, #root {
     font-size: 1rem;
   }
 }
+
+
+
+/* Custom Popup */
+.my-popup {
+  background: #1A1A1A;
+  border-radius: 12px;
+  
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+   box-shadow: 0 0 20px rgba(250, 250, 250, 0.6);
+}
+
+/* Title */
+.my-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Inputs */
+.my-input {
+  width: 90%;
+  padding: 10px;
+  margin: 8px auto;
+  display: block;
+  border-radius: 6px;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Placeholder styling */
+.my-input::placeholder {
+  color: #cccccc;
+}
+
+/* Confirm Button */
+.my-confirm {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  border-radius: 6px !important;
+  padding: 10px 20px !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.my-confirm:hover {
+  background-color: #2454e3 !important;
+  border-color: #4caf50 !important;
+  color: #ffffff !important;
+}
+
+/* Cancel Button */
+.my-cancel {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  border-radius: 6px !important;
+  padding: 10px 20px !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.my-cancel:hover {
+  background-color: #e74c3c !important;
+  border-color: #e74c3c !important;
+  color: #ffffff !important;
+}
+
+.my-textarea {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 8px;
+  border-radius: 6px;
+  border: 1px solid #ffffff;
+  outline: none;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  min-height: 100px;
+  resize: none;
+  background: transparent;
+  color: white;
+}
+
+
+/* Style SweetAlert validation message */
+.swal2-validation-message {
+  color: #4650e0;        /* Red warning */
+  font-size: 14px;
+  background-color: #1A1A1A;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin-top: 8px;
+}
