@@ -10,3 +10,78 @@ html, body, #root {
   height: 100%;
   width: 100%;
 }
+
+
+
+.splash-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color:#0f0f0f;
+  /* background-image: url('https://media.istockphoto.com/photos/dark-blue-de-focused-blurred-motion-abstract-background-picture-id1323916906?k=20&m=1323916906&s=612x612&w=0&h=BlPFt3w9x5dgnKMHt-eslbGhlDt9jScQSr24NibiotU=');  */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+.splash-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.splash-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.continue-button {
+  margin-top: 40px;
+  padding: 10px 40px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #000000;
+  border: 2px solid whitesmoke ;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+/* Simple fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .splash-logo {
+    width: 150px;
+  }
+
+  .splash-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .splash-logo {
+    width: 120px;
+  }
+
+  .splash-text {
+    font-size: 1rem;
+  }
+}
