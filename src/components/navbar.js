@@ -132,7 +132,7 @@ const styles = {
     listStyle: "none",
     margin: 0,
     padding: "0.8rem 1.5rem",
-    border: "1px solid white",
+    border: "1px solid black",
     borderRadius: "8px",
     backgroundColor: "black",
   },
