@@ -6,10 +6,12 @@ import TextJsonTools from "./components/TextJsonTools";
 import Base64Tools from "./components/Base64Tools";
 import QrCode from "./components/QrCodeGenerator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf, faImage, faCode, faQrcode, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faImage, faCode, faQrcode, faFile,faLaptopCode } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import Navbar from "./components/navbar";
 import logo from "../src/Group 16.png"
+import CodeCompiler from "./components/CodeCompiler"
+import UtilityTools from "./components/UtilityTools"
 
 function App() {
   const [tool, setTool] = useState("PDF→DOCX/Conversion");
@@ -39,6 +41,8 @@ function App() {
     { name: "Text & JSON Tools", icon: <FontAwesomeIcon icon={faCode} /> },
     { name: "Base64 Encoder/Decoder", icon: <FontAwesomeIcon icon={faCode} /> },
     { name: "QR Code Generator", icon: <FontAwesomeIcon icon={faQrcode} /> },
+    { name: "Code Compiler", icon: <FontAwesomeIcon icon={faLaptopCode} /> }, ///Under Deveploment
+    { name: "Utility Tools", icon: <FontAwesomeIcon icon={faLaptopCode} /> }, ///Under Deveploment
   ];
 
   return (
@@ -85,6 +89,9 @@ function App() {
           {tool === "Text & JSON Tools" && <TextJsonTools />}
           {tool === "Base64 Encoder/Decoder" && <Base64Tools />}
           {tool === "QR Code Generator" && <QrCode />}
+          {tool === "Code Compiler" && <CodeCompiler />}
+          {tool === "Utility Tools" && <UtilityTools />}
+
         </div>
       </div>
     </div>
