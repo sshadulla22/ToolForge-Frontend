@@ -43,12 +43,12 @@ function App() {
 
   return (
     <div style={styles.container}>
-      <Navbar />
+   
       <div style={styles.header}>
         <h1 style={styles.title}>ToolForge</h1>
         <p style={styles.subtitle}>All-in-one productivity toolkit</p>
       </div>
-
+   <Navbar />
       <div style={styles.toolSelector}>
         {tools.map((t) => (
           <button
