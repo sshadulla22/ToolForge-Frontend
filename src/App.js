@@ -9,35 +9,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf, faImage, faCode, faQrcode, faFile } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import Navbar from "./components/navbar";
-
+import logo from "../src/Group 16.png"
 
 function App() {
   const [tool, setTool] = useState("PDF→DOCX/Conversion");
+  const [showSplash, setShowSplash] = useState(true);
 
- const tools = [
-  { name: "PDF→DOCX/Conversion", icon: <FontAwesomeIcon icon={faFile} /> },
-  { name: "PDF Tools", icon: <FontAwesomeIcon icon={faFilePdf} /> },
-  { name: "Image Tools", icon: <FontAwesomeIcon icon={faImage} /> },
-  { name: "Text & JSON Tools", icon: <FontAwesomeIcon icon={faCode} /> },
-  { name: "Base64 Encoder/Decoder", icon: <FontAwesomeIcon icon={faCode} /> },
-  { name: "QR Code Generator", icon: <FontAwesomeIcon icon={faQrcode} /> },
-];
+  const handleContinue = () => {
+    setShowSplash(false);
+  };
+
+  // --- Splash Screen ---
+  if (showSplash) {
+    return (
+      <div className="splash-screen">
+        <img src={logo} alt="Khandan Logo" className="splash-logo" />
+        <button className="continue-button" onClick={handleContinue}>
+          Continue
+        </button>
+      </div>
+    );
+  }
+
+  // --- Main App (ToolForge) ---
+  const tools = [
+    { name: "PDF→DOCX/Conversion", icon: <FontAwesomeIcon icon={faFile} /> },
+    { name: "PDF Tools", icon: <FontAwesomeIcon icon={faFilePdf} /> },
+    { name: "Image Tools", icon: <FontAwesomeIcon icon={faImage} /> },
+    { name: "Text & JSON Tools", icon: <FontAwesomeIcon icon={faCode} /> },
+    { name: "Base64 Encoder/Decoder", icon: <FontAwesomeIcon icon={faCode} /> },
+    { name: "QR Code Generator", icon: <FontAwesomeIcon icon={faQrcode} /> },
+  ];
 
   return (
     <div style={styles.container}>
-      
+      <Navbar />
       <div style={styles.header}>
         <h1 style={styles.title}>ToolForge</h1>
         <p style={styles.subtitle}>All-in-one productivity toolkit</p>
       </div>
-      
+
       <div style={styles.toolSelector}>
         {tools.map((t) => (
           <button
             key={t.name}
             style={{
               ...styles.toolButton,
-              ...(tool === t.name ? styles.activeButton : {})
+              ...(tool === t.name ? styles.activeButton : {}),
             }}
             onClick={() => setTool(t.name)}
             onMouseEnter={(e) => {
@@ -49,7 +67,7 @@ function App() {
             onMouseLeave={(e) => {
               if (tool !== t.name) {
                 e.target.style.backgroundColor = styles.toolButton.backgroundColor;
-                e.target.style.transform = 'translateY(0)';
+                e.target.style.transform = "translateY(0)";
               }
             }}
           >
@@ -75,13 +93,12 @@ function App() {
 
 const styles = {
   container: {
-    padding: "100%",
     minHeight: "100vh",
     backgroundColor: "#0f0f0f",
     color: "#ffffff",
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     padding: "2rem",
-    borderRadius: '5px',
+    borderRadius: "5px",
   },
   header: {
     textAlign: "center",
