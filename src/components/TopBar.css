@@ -1,0 +1,112 @@
+/* Navbar container */
+.navbar {
+  background: #262626; /* Dark background */
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+/* Flexbox layout */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px; /* keeps content centered */
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #ffffff; /* white text for dark bg */
+}
+
+/* Nav links (desktop default) */
+.nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #e5e5e5; /* light gray */
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links li a:hover {
+  color: #3b82f6; /* blue hover */
+}
+
+/* CTA button */
+.get-started {
+  background: linear-gradient(to right, #4f46e5, #3b82f6);
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.get-started:hover {
+  opacity: 0.9;
+}
+
+/* Mobile toggle button */
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none; /* hidden on desktop */
+  font-size: 24px;
+  color: white;
+  background-color: #262626 !important;
+  padding: 0px;
+  margin-left: 300px;
+}
+
+/* Responsive styles */
+@media (max-width: 960px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 12px;
+    width: 100%;
+    background: #1a1a1a;
+    border-radius: 6px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .get-started {
+    display: none; /* hide CTA button on mobile */
+  }
+
+  .menu-toggle {
+    display: block; /* show hamburger on mobile */
+  }
+}
+
+/* Extra small devices (phones <480px) */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 18px;
+  }
+
+  .nav-links li a {
+    font-size: 14px;
+  }
+}
