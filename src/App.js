@@ -6,12 +6,14 @@ import TextJsonTools from "./components/TextJsonTools";
 import Base64Tools from "./components/Base64Tools";
 import QrCode from "./components/QrCodeGenerator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf, faImage, faCode, faQrcode, faFile,faLaptopCode } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faImage, faCode, faQrcode, faFile,faLaptopCode,faScrewdriverWrench } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import Navbar from "./components/navbar";
 import logo from "../src/Group 16.png"
 import CodeCompiler from "./components/CodeCompiler"
 import UtilityTools from "./components/UtilityTools"
+import TopBar from "../src/components/TopBar"
+
 
 function App() {
   const [tool, setTool] = useState("PDF→DOCX/Conversion");
@@ -26,6 +28,8 @@ function App() {
     return (
       <div className="splash-screen">
         <img src={logo} alt="Khandan Logo" className="splash-logo" />
+        <h1 style={styles.title}>Hi Welcome to</h1>
+        <h1 style={styles.title}>ToolForge</h1>
         <button className="continue-button" onClick={handleContinue}>
           Continue
         </button>
@@ -42,17 +46,18 @@ function App() {
     { name: "Base64 Encoder/Decoder", icon: <FontAwesomeIcon icon={faCode} /> },
     { name: "QR Code Generator", icon: <FontAwesomeIcon icon={faQrcode} /> },
     { name: "Code Compiler", icon: <FontAwesomeIcon icon={faLaptopCode} /> }, ///Under Deveploment
-    { name: "Utility Tools", icon: <FontAwesomeIcon icon={faLaptopCode} /> }, ///Under Deveploment
+    { name: "Utility Tools", icon: <FontAwesomeIcon icon={faScrewdriverWrench} />}, ///Under Deveploment
   ];
 
   return (
+    <div>
+      <TopBar/>
     <div style={styles.container}>
    
       <div style={styles.header}>
         <h1 style={styles.title}>ToolForge</h1>
         <p style={styles.subtitle}>All-in-one productivity toolkit</p>
       </div>
-   <Navbar />
       <div style={styles.toolSelector}>
         {tools.map((t) => (
           <button
@@ -75,10 +80,12 @@ function App() {
               }
             }}
           >
+            
             <span style={styles.toolIcon}>{t.icon}</span>
             <span style={styles.toolName}>{t.name}</span>
           </button>
         ))}
+        
       </div>
 
       <div style={styles.toolContainer}>
@@ -93,8 +100,12 @@ function App() {
           {tool === "Utility Tools" && <UtilityTools />}
 
         </div>
+        
       </div>
+      <Navbar />
     </div>
+    </div>
+    
   );
 }
 
@@ -105,7 +116,6 @@ const styles = {
     color: "#ffffff",
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     padding: "2rem",
-    borderRadius: "5px",
   },
   header: {
     textAlign: "center",
@@ -152,7 +162,7 @@ const styles = {
     borderColor: "#3b82f6",
     color: "#ffffff",
     transform: "translateY(-2px)",
-    boxShadow: "0 8px 25px rgba(37, 99, 235, 0.3)",
+    
   },
   hoverButton: {
     backgroundColor: "#262626",
