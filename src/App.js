@@ -29,7 +29,7 @@ function App() {
       <div className="splash-screen">
         <img src={logo} alt="Khandan Logo" className="splash-logo" />
         <h1 style={styles.title}>Hi Welcome to</h1>
-        <h1 style={styles.title}>ToolForge</h1>
+        <h1 style={styles.title}>TooConvert</h1>
         <button className="continue-button" onClick={handleContinue}>
           Continue
         </button>
@@ -37,7 +37,7 @@ function App() {
     );
   }
 
-  // --- Main App (ToolForge) ---
+  // --- Main App (TooConvert) ---
   const tools = [
     { name: "PDF→DOCX/Conversion", icon: <FontAwesomeIcon icon={faFile} /> },
     { name: "PDF Tools", icon: <FontAwesomeIcon icon={faFilePdf} /> },
@@ -55,7 +55,7 @@ function App() {
     <div style={styles.container}>
    
       <div style={styles.header}>
-        <h1 style={styles.title}>ToolForge</h1>
+        <h1 style={styles.title}>TooConvert</h1>
         <p style={styles.subtitle}>All-in-one productivity toolkit</p>
       </div>
       <div style={styles.toolSelector}>
