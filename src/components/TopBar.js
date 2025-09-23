@@ -20,12 +20,12 @@ export default function TopBar() {
           <li><a href="#">Docs</a></li> */}
         </ul>
 
-        <button className="get-started">Get Started</button>
+        // <button className="get-started">Get Started</button>
 
-        // {/* Toggle Button */}
-        // <button className="menu-toggle" onClick={() => setOpen(!open)}>
-        //   {open ? <FontAwesomeIcon icon={faXmark} />  : <FontAwesomeIcon icon={faBars} />}
-        // </button>
+        {/* Toggle Button */}
+        <button className="menu-toggle" onClick={() => setOpen(!open)}>
+          {open ? <FontAwesomeIcon icon={faXmark} />  : <FontAwesomeIcon icon={faBars} />}
+        </button>
       </div>
     </nav>
   );
