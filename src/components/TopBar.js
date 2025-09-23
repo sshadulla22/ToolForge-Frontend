@@ -22,11 +22,12 @@ export default function TopBar() {
 
         <button className="get-started">Get Started</button>
 
-        {/* Toggle Button */}
-        <button className="menu-toggle" onClick={() => setOpen(!open)}>
-          {open ? <FontAwesomeIcon icon={faXmark} />  : <FontAwesomeIcon icon={faBars} />}
-        </button>
+        // {/* Toggle Button */}
+        // <button className="menu-toggle" onClick={() => setOpen(!open)}>
+        //   {open ? <FontAwesomeIcon icon={faXmark} />  : <FontAwesomeIcon icon={faBars} />}
+        // </button>
       </div>
     </nav>
   );
 }
+
