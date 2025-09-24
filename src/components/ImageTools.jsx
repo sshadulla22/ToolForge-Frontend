@@ -27,22 +27,22 @@ function ImageTools() {
     switch (subtool) {
       case "Compress Image":
         formData.append("target_size", targetSize);
-        url = "https://toolforge-backend-1.onrender.com/compress-image/";
+        url = "https://api.tooconvert.in/compress-image/";
         break;
       case "Resize Image":
         formData.append("width", width);
         formData.append("height", height);
-        url = "https://toolforge-backend-1.onrender.com/resize-image/";
+        url = "https://api.tooconvert.in/resize-image/";
         break;
       case "Convert Format":
         formData.append("format", format);
-        url = "https://toolforge-backend-1.onrender.com/convert-format/";
+        url = "https://api.tooconvert.in/convert-format/";
         break;
       case "Add Watermark":
         formData.append("text", watermarkText);
         formData.append("opacity", opacity);
         formData.append("font_size", fontSize);
-        url = "https://toolforge-backend-1.onrender.com/watermark/";
+        url = "https://api.tooconvert.in/watermark/";
         break;
       default:
         return alert("Invalid tool selected!");
