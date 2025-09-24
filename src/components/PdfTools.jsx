@@ -32,7 +32,7 @@ export default function PdfTools() {
       const formData = new FormData();
       files.forEach(f => formData.append("files", f));
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/merge-pdf/",
+        "https://api.tooconvert.in/merge-pdf/",
         formData,
         { responseType: "blob" }
       );
@@ -54,7 +54,7 @@ export default function PdfTools() {
       formData.append("file", splitFile);
       formData.append("pages_per_split", splitPages);
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/split-pdf/",
+        "https://api.tooconvert.in/split-pdf/",
         formData,
         { responseType: "blob" }
       );
@@ -75,7 +75,7 @@ export default function PdfTools() {
       const formData = new FormData();
       formData.append("file", extractFile);
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/extract-text/",
+        "https://api.tooconvert.in/extract-text/",
         formData
       );
       setExtractedText(response.data.text);
