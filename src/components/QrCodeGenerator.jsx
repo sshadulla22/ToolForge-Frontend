@@ -17,7 +17,7 @@ export default function QrCodeGenerator() {
       formData.append("text", text);
 
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/generate-qr/",
+        "https://api.tooconvert.in/generate-qr/",
         formData,
         { responseType: "blob" }
       );
