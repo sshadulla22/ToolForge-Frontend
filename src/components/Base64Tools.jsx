@@ -16,7 +16,7 @@ export default function Base64Tools() {
 
     try {
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/base64-encode/",
+        "https://api.tooconvert.in/base64-encode/",
         formData
       );
       setEncoded(response.data.base64);
@@ -38,7 +38,7 @@ export default function Base64Tools() {
       formData.append("encoded", encoded);
 
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/base64-decode/",
+        "https://api.tooconvert.in/base64-decode/",
         formData,
         { responseType: "blob" }
       );
