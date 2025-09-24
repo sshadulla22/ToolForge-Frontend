@@ -31,7 +31,7 @@ export default function PdfToDocx() {
       formData.append("file", file);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/pdf-to-docx/",
+        "https://api.tooconvert.in/pdf-to-docx/",
         formData,
         { responseType: "blob" }
       );
