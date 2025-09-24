@@ -10,7 +10,7 @@ export default function TextJsonTools() {
 
     try {
       const response = await axios.post(
-        "https://toolforge-backend-1.onrender.com/format-json/",
+        "https://api.tooconvert.in/format-json/",
         { json_text: jsonText },
         { headers: { "Content-Type": "application/json" } }
       );
