@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 
 const converters = [
-  { title: "PDF → DOCX", apiUrl: "https://toolforge-backend-1.onrender.com/convert/pdf-to-docx", accept: ".pdf", outputExt: ".docx" },
-  { title: "DOCX → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/docx-to-pdf", accept: ".docx", outputExt: ".pdf" },
-  { title: "PDF → Image", apiUrl: "https://toolforge-backend-1.onrender.com/convert/pdf-to-image", accept: ".pdf", outputExt: ".jpg" },
-  { title: "Image → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/image-to-pdf", accept: "image/*", outputExt: ".pdf" },
-  { title: "PPT → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/ppt-to-pdf", accept: ".ppt,.pptx", outputExt: ".pdf" },
-  { title: "Excel → PDF", apiUrl: "https://toolforge-backend-1.onrender.com/convert/excel-to-pdf", accept: ".xls,.xlsx", outputExt: ".pdf" },
+  { title: "PDF → DOCX", apiUrl: "https://api.tooconvert.in/convert/pdf-to-docx", accept: ".pdf", outputExt: ".docx" },
+  { title: "DOCX → PDF", apiUrl: "https://api.tooconvert.in/convert/docx-to-pdf", accept: ".docx", outputExt: ".pdf" },
+  { title: "PDF → Image", apiUrl: "https://api.tooconvert.in/convert/pdf-to-image", accept: ".pdf", outputExt: ".jpg" },
+  { title: "Image → PDF", apiUrl: "https://api.tooconvert.in/convert/image-to-pdf", accept: "image/*", outputExt: ".pdf" },
+  { title: "PPT → PDF", apiUrl: "https://api.tooconvert.in/convert/ppt-to-pdf", accept: ".ppt,.pptx", outputExt: ".pdf" },
+  { title: "Excel → PDF", apiUrl: "https://api.tooconvert.in/convert/excel-to-pdf", accept: ".xls,.xlsx", outputExt: ".pdf" },
 ];
 
 export default function FileConverterDashboard() {
