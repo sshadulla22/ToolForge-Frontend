@@ -17,7 +17,7 @@ body {
   display: flex; /* Horizontal layout */
   justify-content: space-between; /* Space between logo and links */
   align-items: center; /* Vertically center items */
-  padding: 20px 60px; /* Top-bottom and left-right padding */
+   padding: 15px 10px; /* Top-bottom and left-right padding */
   /* background: #262626; Navbar background */
   box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
 }
@@ -452,6 +452,7 @@ text-align:center;
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
 
 
 
