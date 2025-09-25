@@ -15,7 +15,7 @@ const LandingPage = ({ onContinue }) => {
       {/* Navbar */}
       <nav className="navbar">
         <h2 className="logo">
-          <img src={logo} alt="TooConvert Logo" /> TooConvert
+          <img src={logo} alt="TooConvert Logo" height="50" width="150" /> TooConvert
         </h2>
         <ul className="nav-links">
           <li><a href="#hero">Home</a></li>
@@ -303,3 +303,4 @@ const LandingPage = ({ onContinue }) => {
 };
 
 export default LandingPage;
+
