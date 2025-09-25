@@ -15,7 +15,7 @@ const LandingPage = ({ onContinue }) => {
       {/* Navbar */}
       <nav className="navbar">
         <h2 className="logo">
-          <img src={logo} alt="TooConvert Logo" height="50" width="150" /> TooConvert
+          <img src={logo} alt="TooConvert Logo" height="50" width="45" /> TooConvert
         </h2>
         <ul className="nav-links">
           <li><a href="#hero">Home</a></li>
@@ -271,7 +271,7 @@ const LandingPage = ({ onContinue }) => {
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-about">
-            <h3 className="logo"> <img src={logo} alt="TooConvert Logo" />TooConvert</h3>
+            <h3 className="logo"> <img src={logo} alt="TooConvert Logo" height="50" width="45" />TooConvert</h3>
             <p>Your all-in-one file conversion and productivity toolkit. Fast, secure, and 100% online.</p>
           </div>
 
@@ -303,4 +303,5 @@ const LandingPage = ({ onContinue }) => {
 };
 
 export default LandingPage;
+
 
