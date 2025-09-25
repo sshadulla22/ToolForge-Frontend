@@ -17,27 +17,9 @@ import TopBar from "../src/components/TopBar"
 
 function App() {
   const [tool, setTool] = useState("PDF→DOCX/Conversion");
-  const [showSplash, setShowSplash] = useState(true);
+ 
 
-  const handleContinue = () => {
-    setShowSplash(false);
-  };
-
-  // --- Splash Screen ---
-  if (showSplash) {
-    return (
-      <div className="splash-screen">
-        <img src={logo} alt="Khandan Logo" className="splash-logo" />
-        <h1 style={styles.title}>Hi Welcome to</h1>
-        <h1 style={styles.title}>TooConvert</h1>
-        <button className="continue-button" onClick={handleContinue}>
-          Continue
-        </button>
-      </div>
-    );
-  }
-
-  // --- Main App (TooConvert) ---
+  // --- Main App (ToolForge) ---
   const tools = [
     { name: "PDF→DOCX/Conversion", icon: <FontAwesomeIcon icon={faFile} /> },
     { name: "PDF Tools", icon: <FontAwesomeIcon icon={faFilePdf} /> },
@@ -158,14 +140,13 @@ const styles = {
     color: "#cccccc",
   },
   activeButton: {
-    backgroundColor: "#2563eb",
-    borderColor: "#3b82f6",
+    backgroundColor: " #2EB3B0",
+    borderColor: "#000000ff",
     color: "#ffffff",
     transform: "translateY(-2px)",
     
   },
   hoverButton: {
-    backgroundColor: "#262626",
     transform: "translateY(-1px)",
   },
   toolIcon: {
